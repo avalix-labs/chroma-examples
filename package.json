@@ -1,0 +1,27 @@
+{
+  "name": "chroma-examples",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:watch": "playwright test --ui",
+    "test:prepare": "npx @avalix/chroma download-extensions"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/avalix-labs/chroma-examples.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/avalix-labs/chroma-examples/issues"
+  },
+  "homepage": "https://github.com/avalix-labs/chroma-examples#readme",
+  "devDependencies": {
+    "@avalix/chroma": "^0.0.9",
+    "@playwright/test": "^1.56.0",
+    "@types/node": "^24.7.0"
+  }
+}
