@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/avalix-labs/chroma-examples#readme",
   "devDependencies": {
-    "@avalix/chroma": "https://pkg.pr.new/@avalix/chroma@68",
+    "@avalix/chroma": "https://pkg.pr.new/@avalix/chroma@a065ff5",
     "@playwright/test": "^1.59.1",
     "@types/node": "^24.7.0"
   }
