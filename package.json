@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "playwright test",
-    "test:watch": "playwright test --ui",
+    "test:ui": "playwright test --ui",
     "test:prepare": "npx @avalix/chroma download-extensions"
   },
   "repository": {
