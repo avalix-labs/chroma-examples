@@ -6,6 +6,10 @@ const test = createWalletTest({
   wallets: [{ type: 'metamask' }],
 })
 
+test.beforeEach(() => {
+  console.log('[spec] running tests/metamask-no-setup.spec.ts')
+})
+
 test.beforeAll(async ({wallets}) => {
   console.log('[wallet] metamask.importSeedPhrase')
   await wallets.metamask.importSeedPhrase({ seedPhrase: SEED_PHRASE })
