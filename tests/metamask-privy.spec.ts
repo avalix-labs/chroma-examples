@@ -26,6 +26,12 @@ test('should import account and connect MetaMask wallet', async ({ page, wallets
     await metamask.approve()
     await page.waitForTimeout(1000)
 
+    try {
+      await metamask.approve()
+    } catch (error) {
+      console.log('no approve needed')    
+    }
+
     await page.getByText('0x646...E85').first().waitFor({ state: 'visible' })
   }
 
