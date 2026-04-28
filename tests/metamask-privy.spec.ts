@@ -1,5 +1,9 @@
 import { test } from './fixtures'
 
+test.beforeEach(() => {
+  console.log('[spec] running tests/metamask-privy.spec.ts')
+})
+
 test('should import account and connect MetaMask wallet', async ({ page, wallets }) => {
   const metamask = wallets.metamask
 
