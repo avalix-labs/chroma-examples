@@ -12,16 +12,23 @@ test('should import account and connect MetaMask wallet', async ({ page, wallets
   await metamask.unlock()
   await page.bringToFront()
 
+  const rejectAll = page.getByRole('button', { name: 'REJECT ALL' })
+  if (await rejectAll.isVisible()) {
+    await rejectAll.click()
+  }
+  await page.waitForTimeout(2000)
+
   const alreadyConnected = await page
     .getByRole('button', { name: 'Sign out' })
     .isVisible({ timeout: 2500 })
 
   if (!alreadyConnected) {
+    const search = page.getByPlaceholder(/Search.*wallets?/i)
     await page.getByRole('button', { name: 'Continue with a wallet' }).click()
-    await page.getByPlaceholder('Search through 602 wallets').click()
-    await page.getByPlaceholder('Search through 602 wallets').fill('metamask flask')
-    await page.getByRole('button', { name: 'MetaMask Flask' }).click()
-    await page.getByRole('button', { name: 'MetaMask Flask' }).first().click()
+    await search.click()
+    await search.fill('metamask')
+    await page.getByRole('button', { name: 'MetaMask' }).click()
+    await page.getByRole('button', { name: 'MetaMask' }).first().click()
     console.log('[wallet] metamask.approve')
     await metamask.approve()
     await page.waitForTimeout(1000)
