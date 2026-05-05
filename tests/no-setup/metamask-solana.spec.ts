@@ -22,8 +22,11 @@ test('should connect Solana account on Privy demo', async ({ page, wallets }) =>
   await page.goto('https://demo.privy.io')
   await page.bringToFront()
 
-  await page.getByRole('button', { name: 'REJECT ALL' }).click()
-  await page.waitForTimeout(2000)
+  const rejectAll = page.getByRole('button', { name: 'REJECT ALL' })
+  if (await rejectAll.isVisible().catch(() => false)) {
+    await rejectAll.click()
+    await page.waitForTimeout(2000)
+  }
 
   await page.getByRole('button', { name: 'Continue with a wallet' }).click()
   // Privy shows the wallet count in the placeholder ("Search through 602
