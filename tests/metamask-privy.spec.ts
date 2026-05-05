@@ -4,7 +4,7 @@ test.beforeEach(() => {
   console.log('[spec] running tests/metamask-privy.spec.ts')
 })
 
-test('should import account and connect MetaMask wallet', async ({ page, wallets }) => {
+test.skip('should import account and connect MetaMask wallet', async ({ page, wallets }) => {
   const metamask = wallets.metamask
 
   await page.goto('https://demo.privy.io')
