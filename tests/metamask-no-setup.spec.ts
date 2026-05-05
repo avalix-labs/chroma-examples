@@ -30,9 +30,9 @@ test('should import account and connect MetaMask wallet', async ({ page, wallets
   const search = page.getByPlaceholder(/Search.*wallets?/i)
   await page.getByRole('button', { name: 'Continue with a wallet' }).click()
   await search.click()
-  await search.fill('metamask')
-  await page.getByRole('button', { name: 'MetaMask' }).click()
-  await page.getByRole('button', { name: 'MetaMask' }).first().click()
+  await search.fill('metamask flask')
+  await page.getByRole('button', { name: 'MetaMask Flask' }).click()
+  await page.getByRole('button', { name: 'MetaMask Flask' }).first().click()
   console.log('[wallet] metamask.approve')
   await metamask.approve()
   console.log('[wallet] metamask.approve')
@@ -52,7 +52,7 @@ test('should sign message and typed data and reject send transaction on EW demo'
   await page.goto('https://ew-demo.metamask.io/')
   await page.bringToFront()
 
-  await page.getByRole('button', { name: 'MetaMask Installed arrow' }).click()
+  await page.getByRole('button', { name: 'Metamask Flask Installed arrow' }).click()
   await page.getByRole('button', { name: 'chain-evm EVM arrow' }).click()
 
   console.log('[wallet] metamask.approve')
