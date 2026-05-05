@@ -23,13 +23,13 @@ export default defineConfig({
     },
     {
       name: 'chromium',
-      testMatch: /^(?!.*no-setup).*\.spec\.ts$/,
+      testMatch: /^(?!.*no-setup\/).*\.spec\.ts$/,
       dependencies: ['setup'],
       use: { ...devices['Desktop Chrome'] },
     },
     {
       name: 'chromium-no-setup',
-      testMatch: /.*no-setup\.spec\.ts/,
+      testMatch: /no-setup\/.*\.spec\.ts$/,
       use: { ...devices['Desktop Chrome'] },
     },
   ],
