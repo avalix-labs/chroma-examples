@@ -7,7 +7,7 @@ const test = createWalletTest({
 })
 
 test.beforeEach(() => {
-  console.log('[spec] running tests/no-setup/metamask.spec.ts')
+  console.log('[spec] running tests/metamask-no-setup.spec.ts')
 })
 
 test.beforeAll(async ({wallets}) => {
@@ -15,47 +15,43 @@ test.beforeAll(async ({wallets}) => {
   await wallets.metamask.importSeedPhrase({ seedPhrase: SEED_PHRASE })
 })
 
-test('should import account and connect MetaMask wallet', async ({ page, wallets }) => {
+test('should connect Solana account on Privy demo', async ({ page, wallets }) => {
   const metamask = wallets.metamask
 
-  console.log('[page] visit https://demo.privy.io')
   await page.goto('https://demo.privy.io')
   await page.bringToFront()
 
-  const rejectAll = page.getByRole('button', { name: 'REJECT ALL' })
-  if (await rejectAll.isVisible().catch(() => false)) {
-    await rejectAll.click()
-    await page.waitForTimeout(2000)
-  }
+  await page.getByRole('button', { name: 'REJECT ALL' }).click()
+  await page.waitForTimeout(2000)
 
-  const search = page.getByPlaceholder(/Search.*wallets?/i)
   await page.getByRole('button', { name: 'Continue with a wallet' }).click()
+  // Privy shows the wallet count in the placeholder ("Search through 602
+  // wallets"); match loosely so the test survives count changes.
+  const search = page.getByPlaceholder(/Search.*wallets?/i)
   await search.click()
   await search.fill('metamask')
   await page.getByRole('button', { name: 'MetaMask' }).click()
-  await page.getByRole('button', { name: 'MetaMask' }).first().click()
+  await page.getByRole('button', { name: 'MetaMask' }).nth(1).click()
+
   console.log('[wallet] metamask.approve')
   await metamask.approve()
   console.log('[wallet] metamask.approve')
   await metamask.approve()
   await page.waitForTimeout(1000)
 
-  await page.getByText('0x646...E85').first().waitFor({ state: 'visible' })
-
   await page.getByRole('button', { name: 'Sign a Message' }).click()
   await page.getByRole('button', { name: 'Sign and continue' }).click()
   await page.getByRole('button', { name: 'Dismiss' }).click()
 })
 
-test('should sign message and typed data and reject send transaction on EW demo', async ({ page, wallets }) => {
+test('should sign and reject Solana transactions on EW demo', async ({ page, wallets }) => {
   const metamask = wallets.metamask
 
-  console.log('[page] visit https://ew-demo.metamask.io/')
   await page.goto('https://ew-demo.metamask.io/')
   await page.bringToFront()
 
   await page.getByRole('button', { name: 'MetaMask Installed arrow' }).click()
-  await page.getByRole('button', { name: 'chain-evm EVM arrow' }).click()
+  await page.getByRole('button', { name: 'chain-solana solana arrow' }).click()
 
   console.log('[wallet] metamask.approve')
   await metamask.approve()
@@ -66,13 +62,8 @@ test('should sign message and typed data and reject send transaction on EW demo'
   await page.getByText('Signature:').first().waitFor({ state: 'visible' })
   await page.waitForTimeout(1000)
 
-  await page.getByRole('button', { name: 'Sign Typed Data' }).click()
-  console.log('[wallet] metamask.approve')
-  await metamask.approve()
-  await page.getByText('Signature:').nth(1).waitFor({ state: 'visible' })
-  await page.waitForTimeout(1000)
-
-  await page.getByRole('button', { name: 'Send Transaction' }).click()
+  await page.getByRole('button', { name: 'Get Balance' }).click()
+  await page.getByRole('button', { name: 'Sign & Send Tx' }).click()
   console.log('[wallet] metamask.reject')
   await metamask.reject()
   await page.locator('span').filter({ hasText: 'User rejected the request.' }).waitFor({ state: 'visible' })
