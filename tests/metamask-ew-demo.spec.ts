@@ -4,7 +4,7 @@ test.beforeEach(() => {
   console.log('[spec] running tests/metamask-ew-demo.spec.ts')
 })
 
-test.skip('should sign message and typed data and reject send transaction on EW demo', async ({
+test('should sign message and typed data and reject send transaction on EW demo', async ({
   page,
   wallets,
 }) => {
@@ -20,8 +20,8 @@ test.skip('should sign message and typed data and reject send transaction on EW 
     .isVisible({ timeout: 2500 })
 
   if (!walletAlreadySelected) {
-    await page.getByRole('button', { name: 'Metamask Flask Installed arrow' }).click();
-    await page.getByRole('button', { name: 'chain-evm EVM arrow' }).click();
+    await page.getByRole('button', { name: 'MetaMask Installed arrow' }).click()
+    await page.getByRole('button', { name: 'chain-evm EVM arrow' }).click()
 
     console.log('[wallet] metamask.approve')
     await metamask.approve()
