@@ -7,7 +7,7 @@ const test = createWalletTest({
 })
 
 test.beforeEach(() => {
-  console.log('[spec] running tests/metamask-no-setup.spec.ts')
+  console.log('[spec] running tests/no-setup/metamask-solana.spec.ts')
 })
 
 test.beforeAll(async ({wallets}) => {
@@ -18,6 +18,7 @@ test.beforeAll(async ({wallets}) => {
 test('should connect Solana account on Privy demo', async ({ page, wallets }) => {
   const metamask = wallets.metamask
 
+  console.log('[page] visit https://demo.privy.io')
   await page.goto('https://demo.privy.io')
   await page.bringToFront()
 
@@ -47,6 +48,7 @@ test('should connect Solana account on Privy demo', async ({ page, wallets }) =>
 test('should sign and reject Solana transactions on EW demo', async ({ page, wallets }) => {
   const metamask = wallets.metamask
 
+  console.log('[page] visit https://ew-demo.metamask.io/')
   await page.goto('https://ew-demo.metamask.io/')
   await page.bringToFront()
 
