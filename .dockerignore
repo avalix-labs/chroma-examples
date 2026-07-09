@@ -1,0 +1,12 @@
+node_modules
+.pnpm-store
+.cache
+.chroma
+test-results
+playwright-report
+blob-report
+.git
+.github
+*.md
+.env
+.env.*
