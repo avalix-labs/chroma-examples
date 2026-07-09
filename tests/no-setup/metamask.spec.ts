@@ -1,4 +1,5 @@
-import { createWalletTest, expect } from '@avalix/chroma'
+import { createWalletTest } from '@avalix/chroma'
+import { connectEwDemo } from '../ew-demo'
 
 const SEED_PHRASE = 'test test test test test test test test test test test junk'
 
@@ -10,7 +11,7 @@ test.beforeEach(() => {
   console.log('[spec] running tests/no-setup/metamask.spec.ts')
 })
 
-test.beforeAll(async ({wallets}) => {
+test.beforeAll(async ({ wallets }) => {
   console.log('[wallet] metamask.importSeedPhrase')
   await wallets.metamask.importSeedPhrase({ seedPhrase: SEED_PHRASE })
 })
@@ -48,17 +49,11 @@ test('should import account and connect MetaMask wallet', async ({ page, wallets
 })
 
 test('should sign message and typed data and reject send transaction on EW demo', async ({ page, wallets }) => {
+  test.setTimeout(120_000)
   const metamask = wallets.metamask
 
   console.log('[page] visit https://ew-demo.metamask.io/')
-  await page.goto('https://ew-demo.metamask.io/')
-  await page.bringToFront()
-
-  await page.getByRole('button', { name: 'MetaMask Installed arrow' }).click()
-  await page.getByRole('button', { name: 'chain-evm EVM arrow' }).click()
-
-  console.log('[wallet] metamask.approve')
-  await metamask.approve()
+  await connectEwDemo(page, metamask)
 
   await page.getByRole('button', { name: 'Sign Message' }).click()
   console.log('[wallet] metamask.approve')
