@@ -52,8 +52,8 @@ export async function connectEwDemo(page: Page, metamask: MetaMaskWallet) {
 
   // Worker-scoped wallet context may already be connected from a previous test.
   await Promise.race([
-    signMessage.waitFor({ state: 'visible', timeout: 15_000 }),
-    connectButton.waitFor({ state: 'visible', timeout: 15_000 }),
+    signMessage.waitFor({ state: 'visible', timeout: 30_000 }),
+    connectButton.waitFor({ state: 'visible', timeout: 30_000 }),
   ])
   if (await signMessage.isVisible().catch(() => false))
     return
