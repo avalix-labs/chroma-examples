@@ -47,19 +47,38 @@ export async function connectEwDemo(page: Page, metamask: MetaMaskWallet) {
     await closeDialog.click()
   }
 
-  // MetaMask → connect → ownership signature → accept terms
-  await page.getByRole('button', { name: /MetaMask/i }).first().click()
-  await metamask.approve()
-  try {
-    await Promise.race([
-      metamask.approve(),
-      new Promise((_, reject) => setTimeout(() => reject(new Error('no second approve')), 10_000)),
-    ])
-  } catch {
-    // Ownership signature may already be handled by the first approve.
+  // Worker-scoped wallet context may already be connected from a previous test.
+  const alreadyConnected = await page
+    .getByRole('button', { name: 'Sign Message' })
+    .isVisible({ timeout: 2500 })
+    .catch(() => false)
+
+  if (!alreadyConnected) {
+    // MetaMask → connect → ownership signature → accept terms
+    await page.getByRole('button', { name: /MetaMask/i }).first().click()
+    await metamask.approve()
+    try {
+      await Promise.race([
+        metamask.approve(),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('no second approve')), 10_000)),
+      ])
+    } catch {
+      // Ownership signature may already be handled by the first approve.
+    }
+    await page.getByRole('button', { name: 'Accept' }).click()
+    await page.getByRole('button', { name: 'Sign Message' }).waitFor({ state: 'visible' })
   }
-  await page.getByRole('button', { name: 'Accept' }).click()
-  await page.getByRole('button', { name: 'Sign Message' }).waitFor({ state: 'visible' })
+
+  // A previous Solana setup spec may have left the demo on Solana Devnet.
+  const chainButton = page.getByRole('button', { name: /Ethereum|Sepolia|Solana/i }).first()
+  if (await chainButton.isVisible().catch(() => false)) {
+    const label = (await chainButton.innerText()).trim()
+    if (/Solana/i.test(label)) {
+      await chainButton.click()
+      await page.getByRole('button', { name: /Ethereum|Sepolia/i }).first().click()
+      await page.getByRole('button', { name: 'Sign Typed Data' }).waitFor({ state: 'visible' })
+    }
+  }
 }
 
 export async function switchEwDemoToSolanaDevnet(page: Page) {
