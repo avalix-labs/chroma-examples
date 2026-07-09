@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@avalix/chroma':
-        specifier: ^1.2.0
-        version: 1.2.0(@playwright/test@1.61.1)
+        specifier: https://pkg.pr.new/@avalix/chroma@6a3aa54
+        version: https://pkg.pr.new/@avalix/chroma@6a3aa54(@playwright/test@1.61.1)
       '@playwright/test':
         specifier: ^1.61.1
         version: 1.61.1
@@ -20,8 +20,9 @@ importers:
 
 packages:
 
-  '@avalix/chroma@1.2.0':
-    resolution: {integrity: sha512-5YgtBOR/Y8r3xEFjKCCp3llE0HwIk+xJMBC7VZskETWIxcOQMJb7rSqM9xgTSwHX0j3Jx4YP5Bhe5Q05hakaJA==}
+  '@avalix/chroma@https://pkg.pr.new/@avalix/chroma@6a3aa54':
+    resolution: {integrity: sha512-MsFZaYgmlNWaHdKW0Y0wRSX58CeLVe2PnSnva7H/ybhkAYXJKwSaNUqNzGyuDE7zR6BJlnYb4xlhMshWVGeRwA==, tarball: https://pkg.pr.new/@avalix/chroma@6a3aa54}
+    version: 1.2.0
     engines: {node: '>=20'}
     hasBin: true
     peerDependencies:
@@ -59,7 +60,7 @@ packages:
 
 snapshots:
 
-  '@avalix/chroma@1.2.0(@playwright/test@1.61.1)':
+  '@avalix/chroma@https://pkg.pr.new/@avalix/chroma@6a3aa54(@playwright/test@1.61.1)':
     dependencies:
       '@playwright/test': 1.61.1
       adm-zip: 0.5.18
