@@ -19,10 +19,5 @@ setup('seed metamask account', async ({ wallets }) => {
     return
 
   await wallets.metamask.importSeedPhrase({ seedPhrase: SEED_PHRASE })
-
-  // Give Chrome time to flush MetaMask vault/IndexedDB before the context closes.
-  // Without this, the next project relaunches into a fresh onboarding flow.
-  await new Promise((resolve) => setTimeout(resolve, 3000))
-
   fs.writeFileSync(SENTINEL, '')
 })

@@ -13,8 +13,8 @@ test('should connect Solana account on Privy demo', async ({ page, wallets, wall
   test.setTimeout(90_000)
   const metamask = wallets.metamask
 
-  console.log('[wallet] unlock prepared metamask')
-  await unlockPreparedMetamask(walletContext)
+  console.log('[wallet] metamask.unlock')
+  await unlockPreparedMetamask(wallets, walletContext)
 
   console.log('[page] visit https://demo.privy.io')
   await page.goto('https://demo.privy.io')
@@ -69,8 +69,8 @@ test('should sign and reject Solana transactions on EW demo', async ({ page, wal
   test.setTimeout(120_000)
   const metamask = wallets.metamask
 
-  console.log('[wallet] unlock prepared metamask')
-  await unlockPreparedMetamask(walletContext)
+  console.log('[wallet] metamask.unlock')
+  await unlockPreparedMetamask(wallets, walletContext)
   console.log('[page] visit https://ew-demo.metamask.io/')
   await patchEwDemoSolanaSwitch(page)
   await connectEwDemo(page, metamask)

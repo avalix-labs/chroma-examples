@@ -65,8 +65,16 @@ export async function connectEwDemo(page: Page, metamask: MetaMaskWallet) {
     } catch {
       // Ownership signature may already be handled by the first approve.
     }
-    await page.getByRole('button', { name: 'Accept' }).click()
-    await page.getByRole('button', { name: 'Sign Message' }).waitFor({ state: 'visible' })
+
+    const accept = page.getByRole('button', { name: 'Accept' })
+    const signMessage = page.getByRole('button', { name: 'Sign Message' })
+    await Promise.race([
+      accept.waitFor({ state: 'visible', timeout: 15_000 }),
+      signMessage.waitFor({ state: 'visible', timeout: 15_000 }),
+    ])
+    if (await accept.isVisible().catch(() => false))
+      await accept.click()
+    await signMessage.waitFor({ state: 'visible' })
   }
 
   // A previous Solana setup spec may have left the demo on Solana Devnet.

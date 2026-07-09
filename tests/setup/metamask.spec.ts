@@ -9,8 +9,8 @@ test('should import account and connect MetaMask wallet', async ({ page, wallets
   test.setTimeout(90_000)
   const metamask = wallets.metamask
 
-  console.log('[wallet] unlock prepared metamask')
-  await unlockPreparedMetamask(walletContext)
+  console.log('[wallet] metamask.unlock')
+  await unlockPreparedMetamask(wallets, walletContext)
 
   console.log('[page] visit https://demo.privy.io')
   await page.goto('https://demo.privy.io')
@@ -64,8 +64,8 @@ test('should sign message and typed data and reject send transaction on EW demo'
   test.setTimeout(120_000)
   const metamask = wallets.metamask
 
-  console.log('[wallet] unlock prepared metamask')
-  await unlockPreparedMetamask(walletContext)
+  console.log('[wallet] metamask.unlock')
+  await unlockPreparedMetamask(wallets, walletContext)
   console.log('[page] visit https://ew-demo.metamask.io/')
   await connectEwDemo(page, metamask)
 
