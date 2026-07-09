@@ -21,7 +21,7 @@ importers:
 packages:
 
   '@avalix/chroma@https://pkg.pr.new/@avalix/chroma@132':
-    resolution: {integrity: sha512-H7u7xW8IOUf8fiEw654l9zPCKdB2qJhQFs1JjpUmfxMVGkytKVlPQzVR2Jg39BCC9M/s50eekbQnsgwNwA+rLQ==, tarball: https://pkg.pr.new/@avalix/chroma@132}
+    resolution: {integrity: sha512-Zk/DIYoEvEi0GFXRitJVM+/x6gse5r2wimsO70Eq/9b+eqLJEUVj19z/elQCthqq9QU0yHWj2PLKyynsgrvt7Q==, tarball: https://pkg.pr.new/@avalix/chroma@132}
     version: 1.2.0
     engines: {node: '>=20'}
     hasBin: true

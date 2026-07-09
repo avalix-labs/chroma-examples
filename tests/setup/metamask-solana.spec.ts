@@ -3,18 +3,18 @@ import {
   patchEwDemoSolanaSwitch,
   switchEwDemoToSolanaDevnet,
 } from '../ew-demo'
-import { test, unlockPreparedMetamask } from '../fixtures'
+import { test } from '../fixtures'
 
 test.beforeEach(() => {
   console.log('[spec] running tests/setup/metamask-solana.spec.ts')
 })
 
-test('should connect Solana account on Privy demo', async ({ page, wallets, walletContext }) => {
+test('should connect Solana account on Privy demo', async ({ page, wallets }) => {
   test.setTimeout(90_000)
   const metamask = wallets.metamask
 
   console.log('[wallet] metamask.unlock')
-  await unlockPreparedMetamask(wallets, walletContext)
+  await metamask.unlock()
 
   console.log('[page] visit https://demo.privy.io')
   await page.goto('https://demo.privy.io')
@@ -65,12 +65,12 @@ test('should connect Solana account on Privy demo', async ({ page, wallets, wall
   await page.getByRole('button', { name: 'Dismiss' }).click()
 })
 
-test('should sign and reject Solana transactions on EW demo', async ({ page, wallets, walletContext }) => {
+test('should sign and reject Solana transactions on EW demo', async ({ page, wallets }) => {
   test.setTimeout(120_000)
   const metamask = wallets.metamask
 
   console.log('[wallet] metamask.unlock')
-  await unlockPreparedMetamask(wallets, walletContext)
+  await metamask.unlock()
   console.log('[page] visit https://ew-demo.metamask.io/')
   await patchEwDemoSolanaSwitch(page)
   await connectEwDemo(page, metamask)
