@@ -47,50 +47,55 @@ export async function connectEwDemo(page: Page, metamask: MetaMaskWallet) {
     await closeDialog.click()
   }
 
+  const connectButton = page.getByRole('button', { name: /MetaMask/i }).first()
+  const signMessage = page.getByRole('button', { name: 'Sign Message' })
+
   // Worker-scoped wallet context may already be connected from a previous test.
-  const alreadyConnected = await page
-    .getByRole('button', { name: 'Sign Message' })
-    .isVisible({ timeout: 2500 })
-    .catch(() => false)
+  await Promise.race([
+    signMessage.waitFor({ state: 'visible', timeout: 15_000 }),
+    connectButton.waitFor({ state: 'visible', timeout: 15_000 }),
+  ])
+  if (await signMessage.isVisible().catch(() => false))
+    return
 
-  if (!alreadyConnected) {
-    // MetaMask → connect → ownership signature → accept terms
-    await page.getByRole('button', { name: /MetaMask/i }).first().click()
-    await metamask.approve()
-    try {
-      await Promise.race([
-        metamask.approve(),
-        new Promise((_, reject) => setTimeout(() => reject(new Error('no second approve')), 10_000)),
-      ])
-    } catch {
-      // Ownership signature may already be handled by the first approve.
-    }
+  // MetaMask → connect → ownership signature → accept terms
+  await connectButton.click()
+  await metamask.approve()
 
-    const accept = page.getByRole('button', { name: 'Accept' })
-    const signMessage = page.getByRole('button', { name: 'Sign Message' })
-    await Promise.race([
-      accept.waitFor({ state: 'visible', timeout: 15_000 }),
-      signMessage.waitFor({ state: 'visible', timeout: 15_000 }),
-    ])
-    if (await accept.isVisible().catch(() => false))
-      await accept.click()
-    await signMessage.waitFor({ state: 'visible' })
-  }
+  const accept = page.getByRole('button', { name: 'Accept' })
+  const connected = Promise.race([
+    accept.waitFor({ state: 'visible', timeout: 30_000 }),
+    signMessage.waitFor({ state: 'visible', timeout: 30_000 }),
+  ])
 
-  // A previous Solana setup spec may have left the demo on Solana Devnet.
-  const chainButton = page.getByRole('button', { name: /Ethereum|Sepolia|Solana/i }).first()
-  if (await chainButton.isVisible().catch(() => false)) {
-    const label = (await chainButton.innerText()).trim()
-    if (/Solana/i.test(label)) {
-      await chainButton.click()
-      await page.getByRole('button', { name: /Ethereum|Sepolia/i }).first().click()
-      await page.getByRole('button', { name: 'Sign Typed Data' }).waitFor({ state: 'visible' })
-    }
-  }
+  // The ownership signature may already be covered by the first approve, so stop
+  // waiting on a second prompt as soon as the demo moves past the wallet.
+  await Promise.race([metamask.approve().catch(() => {}), connected])
+  await connected
+
+  if (await accept.isVisible().catch(() => false))
+    await accept.click()
+  await signMessage.waitFor({ state: 'visible' })
+}
+
+function ewDemoChainButton(page: Page) {
+  return page.getByRole('button', { name: /Ethereum|Sepolia|Solana/i }).first()
 }
 
 export async function switchEwDemoToSolanaDevnet(page: Page) {
-  await page.getByRole('button', { name: /Ethereum|Sepolia|Solana/i }).first().click()
+  await ewDemoChainButton(page).click()
   await page.getByRole('button', { name: /Solana Devnet/i }).click()
   await page.getByRole('button', { name: 'Get Balance' }).waitFor({ state: 'visible' })
+}
+
+/** No-op unless a prior spec sharing this worker context left the demo on Solana. */
+export async function switchEwDemoToEthereum(page: Page) {
+  const chainButton = ewDemoChainButton(page)
+  await chainButton.waitFor({ state: 'visible' })
+  if (!/Solana/i.test((await chainButton.innerText()).trim()))
+    return
+
+  await chainButton.click()
+  await page.getByRole('button', { name: /Ethereum|Sepolia/i }).first().click()
+  await page.getByRole('button', { name: 'Sign Typed Data' }).waitFor({ state: 'visible' })
 }

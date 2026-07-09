@@ -4,6 +4,7 @@ import {
   patchEwDemoSolanaSwitch,
   switchEwDemoToSolanaDevnet,
 } from '../ew-demo'
+import { connectPrivyDemo } from '../privy'
 
 const SEED_PHRASE = 'test test test test test test test test test test test junk'
 
@@ -24,29 +25,7 @@ test('should connect Solana account on Privy demo', async ({ page, wallets }) =>
   const metamask = wallets.metamask
 
   console.log('[page] visit https://demo.privy.io')
-  await page.goto('https://demo.privy.io')
-  await page.bringToFront()
-
-  const rejectAll = page.getByRole('button', { name: 'REJECT ALL' })
-  if (await rejectAll.isVisible().catch(() => false)) {
-    await rejectAll.click()
-    await page.waitForTimeout(2000)
-  }
-
-  await page.getByRole('button', { name: 'Continue with a wallet' }).click()
-  // Privy shows the wallet count in the placeholder ("Search through 602
-  // wallets"); match loosely so the test survives count changes.
-  const search = page.getByPlaceholder(/Search.*wallets?/i)
-  await search.click()
-  await search.fill('metamask')
-  await page.getByRole('button', { name: 'MetaMask' }).click()
-  await page.getByRole('button', { name: 'MetaMask' }).nth(1).click()
-
-  console.log('[wallet] metamask.approve')
-  await metamask.approve()
-  console.log('[wallet] metamask.approve')
-  await metamask.approve()
-  await page.waitForTimeout(1000)
+  await connectPrivyDemo(page, metamask, { accountIndex: 1 })
 
   await page.getByRole('button', { name: 'Sign a Message' }).click()
   await page.getByRole('button', { name: 'Sign and continue' }).click()

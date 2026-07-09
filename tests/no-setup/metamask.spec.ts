@@ -1,5 +1,6 @@
 import { createWalletTest } from '@avalix/chroma'
 import { connectEwDemo } from '../ew-demo'
+import { connectPrivyDemo } from '../privy'
 
 const SEED_PHRASE = 'test test test test test test test test test test test junk'
 
@@ -20,26 +21,7 @@ test('should import account and connect MetaMask wallet', async ({ page, wallets
   const metamask = wallets.metamask
 
   console.log('[page] visit https://demo.privy.io')
-  await page.goto('https://demo.privy.io')
-  await page.bringToFront()
-
-  const rejectAll = page.getByRole('button', { name: 'REJECT ALL' })
-  if (await rejectAll.isVisible().catch(() => false)) {
-    await rejectAll.click()
-    await page.waitForTimeout(2000)
-  }
-
-  const search = page.getByPlaceholder(/Search.*wallets?/i)
-  await page.getByRole('button', { name: 'Continue with a wallet' }).click()
-  await search.click()
-  await search.fill('metamask')
-  await page.getByRole('button', { name: 'MetaMask' }).click()
-  await page.getByRole('button', { name: 'MetaMask' }).first().click()
-  console.log('[wallet] metamask.approve')
-  await metamask.approve()
-  console.log('[wallet] metamask.approve')
-  await metamask.approve()
-  await page.waitForTimeout(1000)
+  await connectPrivyDemo(page, metamask)
 
   await page.getByText('0x646...E85').first().waitFor({ state: 'visible' })
 
