@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { createWalletTest } from '@avalix/chroma'
-import { HEADLESS, SETUP_DIR } from './fixtures'
+import { SETUP_DIR } from './fixtures'
 
 const SEED_PHRASE = 'test test test test test test test test test test test junk'
 const SENTINEL = path.join(SETUP_DIR, '.chroma-onboarded')
@@ -9,7 +9,6 @@ const SENTINEL = path.join(SETUP_DIR, '.chroma-onboarded')
 const setup = createWalletTest({
   wallets: [{ type: 'metamask' }],
   userDataDir: SETUP_DIR,
-  headless: HEADLESS,
 })
 
 setup.setTimeout(30_000 * 2)
