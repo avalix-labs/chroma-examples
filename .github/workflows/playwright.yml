@@ -8,34 +8,27 @@ jobs:
     runs-on: blacksmith-4vcpu-ubuntu-2404
     steps:
     - uses: actions/checkout@v7
-
-    - name: Setup Docker Builder (with layer caching)
-      uses: useblacksmith/setup-docker-builder@v1
-
-    - name: Build Docker image
-      uses: useblacksmith/build-push-action@v2
+    - uses: pnpm/action-setup@v6
       with:
-        context: .
-        load: true
-        tags: chroma-examples:latest
+        version: 10
+    - uses: actions/setup-node@v6
+      with:
+        node-version: lts/*
+        cache: pnpm
 
+    - name: Install dependencies
+      run: pnpm install --frozen-lockfile
+
+    - name: Install Playwright Browsers
+      run: pnpm exec playwright install --with-deps chromium
+    - name: Download extensions
+      run: pnpm run test:prepare
     - name: Run Playwright setup tests
-      run: |
-        docker run --rm --shm-size=2gb \
-          -v ${{ github.workspace }}/playwright-report:/app/playwright-report \
-          -v ${{ github.workspace }}/test-results:/app/test-results \
-          chroma-examples:latest
+      run: xvfb-run --auto-servernum --server-args="-screen 0 1280x960x24" -- pnpm exec playwright test --project=chromium-setup --reporter=html
 
     - uses: actions/upload-artifact@v7
       if: ${{ !cancelled() }}
       with:
         name: playwright-report
         path: playwright-report/
-        retention-days: 30
-
-    - uses: actions/upload-artifact@v7
-      if: failure()
-      with:
-        name: playwright-test-results
-        path: test-results/
         retention-days: 30
