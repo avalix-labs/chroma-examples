@@ -9,34 +9,34 @@ importers:
   .:
     devDependencies:
       '@avalix/chroma':
-        specifier: https://pkg.pr.new/@avalix/chroma@e87abeb
-        version: https://pkg.pr.new/@avalix/chroma@e87abeb(@playwright/test@1.59.1)
+        specifier: ^1.2.0
+        version: 1.2.0(@playwright/test@1.61.1)
       '@playwright/test':
-        specifier: ^1.59.1
-        version: 1.59.1
+        specifier: ^1.61.1
+        version: 1.61.1
       '@types/node':
-        specifier: ^24.7.0
-        version: 24.12.2
+        specifier: ^26.1.1
+        version: 26.1.1
 
 packages:
 
-  '@avalix/chroma@https://pkg.pr.new/@avalix/chroma@e87abeb':
-    resolution: {integrity: sha512-QbaFd+MezF0GSACiQm25F7TXFLnn3UUy++2L40280xcuCpBR4F2o6umgx1IUnErjHEl4sovUDcdsrA9D2BOtSg==, tarball: https://pkg.pr.new/@avalix/chroma@e87abeb}
-    version: 1.0.0
+  '@avalix/chroma@1.2.0':
+    resolution: {integrity: sha512-5YgtBOR/Y8r3xEFjKCCp3llE0HwIk+xJMBC7VZskETWIxcOQMJb7rSqM9xgTSwHX0j3Jx4YP5Bhe5Q05hakaJA==}
+    engines: {node: '>=20'}
     hasBin: true
     peerDependencies:
-      '@playwright/test': ^1.59.1
+      '@playwright/test': ^1.61.1
 
-  '@playwright/test@1.59.1':
-    resolution: {integrity: sha512-PG6q63nQg5c9rIi4/Z5lR5IVF7yU5MqmKaPOe0HSc0O2cX1fPi96sUQu5j7eo4gKCkB2AnNGoWt7y4/Xx3Kcqg==}
+  '@playwright/test@1.61.1':
+    resolution: {integrity: sha512-8nKv6+0RJSL9FE4jYOEGXnPeM/Hg12qZpmqzZjRh3qM0Y7c3z1mrOTfFLids72RDQYVh9WpLEfR5WdpNX4fkig==}
     engines: {node: '>=18'}
     hasBin: true
 
-  '@types/node@24.12.2':
-    resolution: {integrity: sha512-A1sre26ke7HDIuY/M23nd9gfB+nrmhtYyMINbjI1zHJxYteKR6qSMX56FsmjMcDb3SMcjJg5BiRRgOCC/yBD0g==}
+  '@types/node@26.1.1':
+    resolution: {integrity: sha512-nxAkRSVkN1Y0JC1W8ky/fTfkGsMmcrRsbx+3XoZE+rMOX71kLYTV7fLXpqud1GpbpP5TuffXFqfX7fH2GgZREw==}
 
-  adm-zip@0.5.17:
-    resolution: {integrity: sha512-+Ut8d9LLqwEvHHJl1+PIHqoyDxFgVN847JTVM3Izi3xHDWPE4UtzzXysMZQs64DMcrJfBeS/uoEP4AD3HQHnQQ==}
+  adm-zip@0.5.18:
+    resolution: {integrity: sha512-ufJnssQGbxzLNS1Ho9bCtX4rQKCCvoVuDLHoJyc3F9dOGDB4BkWs2Ci0kv53lqocAEQ/Cbi+I2XCsNYGqVYqng==}
     engines: {node: '>=12.0'}
 
   fsevents@2.3.2:
@@ -44,45 +44,45 @@ packages:
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
 
-  playwright-core@1.59.1:
-    resolution: {integrity: sha512-HBV/RJg81z5BiiZ9yPzIiClYV/QMsDCKUyogwH9p3MCP6IYjUFu/MActgYAvK0oWyV9NlwM3GLBjADyWgydVyg==}
+  playwright-core@1.61.1:
+    resolution: {integrity: sha512-h7Qlt6m4REp25qvIdvbDtVmD4LqVXfpRxhORv9L0jzETM05p4fuPJ3dKyuSXQxDSbXnmS79HAgi9589lGSpLkg==}
     engines: {node: '>=18'}
     hasBin: true
 
-  playwright@1.59.1:
-    resolution: {integrity: sha512-C8oWjPR3F81yljW9o5OxcWzfh6avkVwDD2VYdwIGqTkl+OGFISgypqzfu7dOe4QNLL2aqcWBmI3PMtLIK233lw==}
+  playwright@1.61.1:
+    resolution: {integrity: sha512-DWnY5o3YbLWK4GovuAVwpqL+1VwGNdUGrRr++8j8PtQQzvAVZUIMjKQ90fY689sEJZJBbZVw1rXaOKSTitkzPQ==}
     engines: {node: '>=18'}
     hasBin: true
 
-  undici-types@7.16.0:
-    resolution: {integrity: sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==}
+  undici-types@8.3.0:
+    resolution: {integrity: sha512-j375ScV60dom+YkPFIfTLcOiPxkN/buHz5GobjLhixFuANaNs3C9l4GmrWqejgXWJ7BbJcFYpTEUkS1Ge8bpZQ==}
 
 snapshots:
 
-  '@avalix/chroma@https://pkg.pr.new/@avalix/chroma@e87abeb(@playwright/test@1.59.1)':
+  '@avalix/chroma@1.2.0(@playwright/test@1.61.1)':
     dependencies:
-      '@playwright/test': 1.59.1
-      adm-zip: 0.5.17
+      '@playwright/test': 1.61.1
+      adm-zip: 0.5.18
 
-  '@playwright/test@1.59.1':
+  '@playwright/test@1.61.1':
     dependencies:
-      playwright: 1.59.1
+      playwright: 1.61.1
 
-  '@types/node@24.12.2':
+  '@types/node@26.1.1':
     dependencies:
-      undici-types: 7.16.0
+      undici-types: 8.3.0
 
-  adm-zip@0.5.17: {}
+  adm-zip@0.5.18: {}
 
   fsevents@2.3.2:
     optional: true
 
-  playwright-core@1.59.1: {}
+  playwright-core@1.61.1: {}
 
-  playwright@1.59.1:
+  playwright@1.61.1:
     dependencies:
-      playwright-core: 1.59.1
+      playwright-core: 1.61.1
     optionalDependencies:
       fsevents: 2.3.2
 
-  undici-types@7.16.0: {}
+  undici-types@8.3.0: {}

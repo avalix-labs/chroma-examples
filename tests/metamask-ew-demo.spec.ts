@@ -1,3 +1,4 @@
+import { connectEwDemo } from './ew-demo'
 import { test } from './fixtures'
 
 test.beforeEach(() => {
@@ -10,22 +11,10 @@ test.skip('should sign message and typed data and reject send transaction on EW 
 }) => {
   const metamask = wallets.metamask
 
-  await page.goto('https://ew-demo.metamask.io/')
   console.log('[wallet] metamask.unlock')
   await metamask.unlock()
-  await page.bringToFront()
-
-  const walletAlreadySelected = await page
-    .getByRole('button', { name: '0xf39fd6e5....b92266' })
-    .isVisible({ timeout: 2500 })
-
-  if (!walletAlreadySelected) {
-    await page.getByRole('button', { name: 'MetaMask Installed arrow' }).click()
-    await page.getByRole('button', { name: 'chain-evm EVM arrow' }).click()
-
-    console.log('[wallet] metamask.approve')
-    await metamask.approve()
-  }
+  console.log('[page] visit https://ew-demo.metamask.io/')
+  await connectEwDemo(page, metamask)
 
   await page.getByRole('button', { name: 'Sign Message' }).click()
   console.log('[wallet] metamask.approve')

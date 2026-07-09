@@ -6,7 +6,7 @@
   "scripts": {
     "test": "playwright test",
     "test:ui": "playwright test --ui",
-    "test:prepare": "chroma download-extensions"
+    "test:prepare": "chroma download-extensions --wallets metamask"
   },
   "repository": {
     "type": "git",
@@ -20,8 +20,8 @@
   },
   "homepage": "https://github.com/avalix-labs/chroma-examples#readme",
   "devDependencies": {
-    "@avalix/chroma": "https://pkg.pr.new/@avalix/chroma@e87abeb",
-    "@playwright/test": "^1.59.1",
-    "@types/node": "^24.7.0"
+    "@avalix/chroma": "^1.2.0",
+    "@playwright/test": "^1.61.1",
+    "@types/node": "^26.1.1"
   }
 }
